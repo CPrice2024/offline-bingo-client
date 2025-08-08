@@ -1,0 +1,121 @@
+.bingo-page {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  padding: 20px;
+}
+
+.card-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+
+}
+
+.card-search {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.card-search input {
+    border: 1px solid #9f0000;
+    font-size: 14px;
+    border-radius: 6px;
+    color: #727272;
+    flex: 1 1;
+    padding: 5px;
+}
+.card-options {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.card-options select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #333;
+  outline: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+}
+
+.card-options select:focus {
+  border-color: #ff5722;
+  box-shadow: 0 0 4px rgba(255, 87, 34, 0.5);
+}
+
+.card-options option {
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+}
+
+.card-search {
+    display: flex;
+    margin-bottom: 10px;
+    width: 300px;
+    gap: 10px;
+}
+.card-search input {
+    color: rgb(114, 114, 114);
+    font-size: 14px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(159, 0, 0);
+    border-image: initial;
+    border-radius: 6px;
+    width: 5px;
+    flex: 1 1 0%;
+    padding: 5px;
+}
+.card-search button {
+  padding: 8px 12px;
+  background: #eb0000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.bingo-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.bingo-cell {
+    text-align: center;
+    padding: 6px;
+    background-color: #b30000;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.bingo-cell:hover {
+  background-color: #bf0000;
+}
+
+.bingo-cell.selected {
+    background-color: #1530c6;
+    padding: 8px;
+    height: 33px;
+    width: auto;
+    color: white;
+}
+
+.blank-space {
+  text-align: center;
+  padding: 30px;
+  color: #aaa;
+  font-style: italic;
+}
