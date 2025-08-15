@@ -462,7 +462,6 @@ useEffect(() => {
             />
           </button>
         </div>
-
         <div className="topbar-right">
           {/* Profile */}
           <div className="dropdown-container" ref={profileRef}>
