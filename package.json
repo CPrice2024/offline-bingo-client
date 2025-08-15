@@ -2,9 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://your-backend-service.onrender.com/api/auth/login",
-  "main": "build/electron.js",
-  "homepage": ".",
+  "proxy": "https://offline-bingo-backend.onrender.com/api/auth/login",
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.4",
     "@testing-library/dom": "^10.4.0",
@@ -12,15 +10,13 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "add": "^2.0.6",
-    "axios": "^1.11.0",
+    "axios": "^1.9.0",
     "chart": "^0.1.2",
     "date-fns": "^4.1.0",
     "dexie": "^4.0.11",
     "framer-motion": "^12.9.2",
     "html2canvas": "^1.4.1",
-    "idb": "^8.0.3",
     "init": "^0.1.2",
-    "is-online": "^11.0.0",
     "joi": "^17.13.3",
     "js-cookie": "^3.0.5",
     "jspdf": "^3.0.1",
@@ -39,25 +35,11 @@
     "use-sound": "^5.0.0",
     "web-vitals": "^2.1.4"
   },
-  "devDependencies": {
-    "autoprefixer": "^10.4.21",
-    "concurrently": "^9.2.0",
-    "copyfiles": "^2.4.1",
-    "cross-env": "^10.0.0",
-    "electron": "^33.4.11",
-    "electron-builder": "^25.1.8",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.4",
-    "wait-on": "^8.0.4"
-  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && copyfiles public\\electron.js build\\electron.js",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron-dev": "cross-env ELECTRON_START_URL=http://localhost:3000 electron build/electron.js",
-    "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && npm run electron-dev\"",
-    "dist": "npm run build && electron-builder"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -77,27 +59,9 @@
       "last 1 safari version"
     ]
   },
-  "build": {
-    "appId": "com.bingo.offline",
-    "productName": "Offline Bingo",
-    "directories": {
-      "buildResources": "assets"
-    },
-    "files": [
-      "build/**/*",
-      "electron.js",
-      "preload.js"
-    ],
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "ia32",
-            "x64"
-          ]
-        }
-      ]
-    }
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4"
   }
 }
