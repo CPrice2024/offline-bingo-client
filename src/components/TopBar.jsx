@@ -98,6 +98,7 @@ const handleLogout = async () => {
   } catch (err) {
     console.warn("Offline logout fallback.");
   }
+  localStorage.removeItem("bingoSelectedPatterns")
 
   navigate("/");
 };
