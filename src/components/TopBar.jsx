@@ -111,7 +111,7 @@ useEffect(() => {
   const alreadyReset = localStorage.getItem("resetDone");
 
   if (!alreadyReset) {
-    await fetchBalance(); // fetch and save
+    await fetchBalance(); 
     await fetchNotifications();
     await syncOfflineDataToMongoDB();
 
@@ -136,19 +136,27 @@ useEffect(() => {
       console.warn("📴 Offline mode: Using cached data...");
 
       try {
-const offlineBalance = await getOfflineBalance(userRole);
-if (typeof offlineBalance === "number" && !isNaN(offlineBalance)) {
-  console.warn("📦 Loaded balance from IndexedDB:", offlineBalance);
+const stored = localStorage.getItem("offlineBalance");
+if (stored !== null && !Number.isNaN(parseFloat(stored))) {
+  const offlineBalance = parseFloat(stored);
+  console.warn("📦 Loaded balance from localStorage:", offlineBalance);
   setBalance(offlineBalance);
 } else {
-  console.warn("⚠️ Offline balance is invalid:", offlineBalance);
+  console.warn("⚠️ No valid offlineBalance in localStorage");
 }
       } catch (err) {
         console.error("❌ Failed to get offline balance:", err);
       }
 
       try {
-
+        const stored = localStorage.getItem("offlineNotifications");
+        if (stored !== null) {
+          const offlineNotifications = JSON.parse(stored);
+          console.warn("📦 Loaded notifications from localStorage:", offlineNotifications);
+          setNotifications(offlineNotifications);
+        } else {
+          console.warn("⚠️ No valid offlineNotifications in localStorage");
+        }
       } catch (err) {
         console.error("❌ Failed to get offline notifications:", err);
       }
@@ -183,10 +191,7 @@ const balanceVal = typeof raw === "number" && !isNaN(raw) ? raw : 0;
     console.error("Failed to fetch balance:", err);
 
     // Fallback to IndexedDB
-    const cachedBalance = await getOfflineBalance(userRole);
-    if (cachedBalance != null) {
-      setBalance(cachedBalance);
-    }
+    
   }
 }, [userRole]);
 
@@ -327,6 +332,20 @@ fetchBalance: async () => {
 }));
 
 useEffect(() => {
+  const handleOffline = () => {
+    console.log("📴 Switched to offline — showing local balance");
+    const stored = localStorage.getItem("offlineBalance");
+    if (stored !== null && !Number.isNaN(parseFloat(stored))) {
+      setBalance(parseFloat(stored));
+    }
+  };
+
+  window.addEventListener("offline", handleOffline);
+  return () => window.removeEventListener("offline", handleOffline);
+}, []);
+
+
+useEffect(() => {
   const syncWhenOnline = async () => {
     if (!navigator.onLine) return;
 
@@ -401,15 +420,8 @@ useEffect(() => {
   useEffect(() => {
     if (!userRole) return;
 
-    fetchBalance();
     fetchNotifications();
     fetchSentTransactions();
-
-    const interval = setInterval(() => {
-      fetchBalance();
-      fetchNotifications();
-      fetchSentTransactions();
-    }, 10000);
 
     const handleClickOutside = (e) => {
       if (notificationsRef.current && !notificationsRef.current.contains(e.target)) {
@@ -429,10 +441,10 @@ useEffect(() => {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      clearInterval(interval);
+      clearInterval();
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [userRole, fetchBalance, fetchNotifications, fetchSentTransactions]);
+  }, [userRole, fetchNotifications, fetchSentTransactions]);
 
   return (
     <>
